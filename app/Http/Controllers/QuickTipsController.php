@@ -5,52 +5,53 @@ namespace App\Http\Controllers;
 use App\Helper;
 use App\Http\Requests\CourseTopicStoreRequest;
 use App\Http\Requests\CourseTopicUpdateRequest;
+use App\Http\Requests\QuickTipsSoreRequest;
+use App\Http\Requests\QuickTipsUpdateRequest;
 use App\Models\Course;
 use App\Models\CourseTopic;
+use App\Models\QuickTip;
 use Illuminate\Http\Request;
 
 class QuickTipsController extends Controller
 {
     public function index(Request $request){
         $courses = Course::all();
-        $query = CourseTopic::query();
+        $query = QuickTip::query();
         if($course_id = $request->get('course-id')){
             $query->where('course_id', $course_id);
         }
-        $course_topics = $query->paginate(10)->withQueryString();
-        return view('quick-tips.index', compact('course_topics', 'courses'));
+        $quick_tips = $query->paginate(10)->withQueryString();
+        return view('quick-tips.index', compact('quick_tips', 'courses'));
     }
 
     public function show($id){
-        $course_topic =  CourseTopic::findOrFail($id);
-        return view('quick-tips.show', compact('course_topic'));
+        $quick_tip =  QuickTip::findOrFail($id);
+        return view('quick-tips.show', compact('quick_tip'));
     }
 
     public function create(Request $request)
     {
-        $courses = Course::all();
-        $course = Course::get();
-        return view('quick-tips.create', compact(  'course', 'courses'));
+        $courses = Course::get();
+        return view('quick-tips.create', compact(  'courses'));
     }
 
     public function edit($id, Request $request)
     {
         $courses = Course::all();
-        $course_topic = CourseTopic::findOrFail($id);
+        $quick_tip = QuickTip::findOrFail($id);
 
-        return view('quick-tipsedit', compact('course_topic', 'courses'));
+        return view('quick-tips.edit', compact('quick_tip', 'courses'));
     }
 
 
-    public function store(CourseTopicStoreRequest $request){
+    public function store(QuickTipsSoreRequest $request){
 
         $data = collect($request->validated())
-            ->merge(['image' => Helper::FileUpload(request_key: 'image', path: 'files')])
             ->toArray();
 
         try {
-            CourseTopic::create($data);
-            return redirect()->route('course_topic.index')->with('success', "Created Successfully");
+            QuickTip::create($data);
+            return redirect()->route('quick_tips.index')->with('success', "Created Successfully");
         }
         catch (\Exception $exception){
             return redirect()->back()->with('error', $exception->getMessage())->withInput($request->all());
@@ -58,18 +59,13 @@ class QuickTipsController extends Controller
     }
 
 
-    public function update($id, CourseTopicUpdateRequest $request){
-        $course_topic = CourseTopic::findOrFail($id);
+    public function update($id, QuickTipsUpdateRequest $request){
+        $quick_tip = QuickTip::findOrFail($id);
         $data = collect($request->validated());
 
-
-        if($path = Helper::FileUpload(request_key: 'image', path: 'files')){
-            $data = $data->merge(['image' => $path]);
-            Helper::RemoveFile($course_topic->image);
-        }
-
         try {
-            $course_topic->update($data->toArray());
+            $quick_tip->update($data->toArray());
+
             return $this->successMessage("Updated Successfully");
         }
         catch (\Exception $exception){
@@ -79,22 +75,22 @@ class QuickTipsController extends Controller
 
 
     public function delete($id){
-        $course_topic =  CourseTopic::findOrFail($id);
-        $course_topic->delete();
-        Helper::RemoveFile($course_topic->imgX);
+        $quick_tip =  QuickTip::findOrFail($id);
+        $quick_tip->delete();
+        Helper::RemoveFile($quick_tip->imgX);
         return $this->successMessage("Deleted Successfully");
     }
 
 
 
     public function changeStatus($id){
-        $invoice =  User::find($id);
-        if (!$invoice){
+        $quick_tip =  QuickTip::find($id);
+        if (!$quick_tip){
             abort(404);
         }
 
-        $invoice->is_close = !$invoice->is_close;
-        $invoice->save();
+        $quick_tip->status = !$quick_tip->status;
+        $quick_tip->save();
         return $this->successMessage('Updated Successfully');
     }
 }

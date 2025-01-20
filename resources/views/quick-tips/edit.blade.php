@@ -4,11 +4,11 @@
 @section('content')
     <div class="p-4">
         <div class="card">
-            <x-card-header :can-create="true" name="Edit Course Topic" :url="route('course_topic.index')" url-name="Back"/>
-            <form action="{{route('course_topic.update', request()->id)}}" method="post" class="card-body" enctype="multipart/form-data">
+            <x-card-header :can-create="true" name="Edit Course Topic" :url="route('quick_tips.index')" url-name="Back"/>
+            <form action="{{route('quick_tips.update', request()->id)}}" method="post" class="card-body" enctype="multipart/form-data">
                 @csrf
 
-                @include('course-topic.form_data', compact('is_edit'))
+                @include('quick-tips.form_data', compact('is_edit'))
 
                 <div class="mb-3 row">
                     <label for="html5-datetime-local-input" class="col-md-2 col-form-label"></label>

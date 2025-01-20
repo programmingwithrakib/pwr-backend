@@ -2,10 +2,10 @@
 @section('content')
     <div class="p-4">
         <div class="card">
-            <x-card-header :can-create="true" name="Create Course Topic" :url="route('course_topic.index')" url-name="back"/>
-            <form action="{{route('course_topic.store')}}" method="post" class="card-body" enctype="multipart/form-data">
+            <x-card-header :can-create="true" name="Create Quick Tips" :url="route('quick_tips.index')" url-name="back"/>
+            <form action="{{route('quick_tips.store')}}" method="post" class="card-body" enctype="multipart/form-data">
                 @csrf
-                @include('course-topic.form_data')
+                @include('quick-tips.form_data')
 
                 <div class="mb-3 row">
                     <label for="html5-datetime-local-input" class="col-md-2 col-form-label"></label>

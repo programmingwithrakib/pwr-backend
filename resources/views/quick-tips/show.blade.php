@@ -1,3 +1,3 @@
 <div class="row">
-    <p>{{json_encode($course_topic)}}</p>
+    <p>{{json_encode($quick_tip)}}</p>
 </div>
