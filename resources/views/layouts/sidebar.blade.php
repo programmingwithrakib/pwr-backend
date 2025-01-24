@@ -68,6 +68,22 @@
             ]
         "/>
 
+        <x-menu-item-dropdown
+            bi-icon="bi-building-gear"
+            name="Short Cuts"
+            :active="$segment1 == 'short-cuts' "
+            :visibility="true"
+            :child="[
+                [
+                    'visibility' => true,
+                    'active' => request()->routeIs('short_cuts.index'),
+                    'url' => route('short_cuts.index'),
+                    'name' => 'All'
+                ],
+            ]
+        "/>
+
+
     </ul>
 
 

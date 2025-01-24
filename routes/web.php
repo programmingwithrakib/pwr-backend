@@ -41,6 +41,21 @@ Route::middleware(['auth.check'])->prefix('/')->group(function (){
         Route::get('/export', [\App\Http\Controllers\QuickTipsController::class, 'export'])->name('export');
     });
 
+
+    /* Course Routes */
+    Route::prefix('short-cuts')->name('short_cuts.')->group(function (){
+        Route::get('/', [\App\Http\Controllers\ShortCutController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\ShortCutController::class, 'create'])->name('create');
+        Route::get('/show/{id}', [\App\Http\Controllers\ShortCutController::class, 'show'])->name('show');
+        Route::get('/topics/{id}', [\App\Http\Controllers\ShortCutController::class, 'getCourseWiseTopic'])->name('get_topics');
+        Route::get('/edit/{id}', [\App\Http\Controllers\ShortCutController::class, 'edit'])->name('edit');
+        Route::get('/changeStatus/{id}', [\App\Http\Controllers\ShortCutController::class, 'changeStatus'])->name('changeStatus');
+        Route::post('/update/{id}', [\App\Http\Controllers\ShortCutController::class, 'update'])->name('update');
+        Route::post('/store', [\App\Http\Controllers\ShortCutController::class, 'store'])->name('store');
+        Route::post('/delete/{id}', [\App\Http\Controllers\ShortCutController::class, 'delete'])->name('delete');
+        Route::get('/export', [\App\Http\Controllers\ShortCutController::class, 'export'])->name('export');
+    });
+
     /* Course Topics Routes */
     Route::prefix('course-topic')->name('course_topic.')->group(function (){
         Route::get('/', [\App\Http\Controllers\CourseTopicController::class, 'index'])->name('index');
