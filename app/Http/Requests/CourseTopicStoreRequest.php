@@ -29,6 +29,7 @@ class CourseTopicStoreRequest extends FormRequest
             'description' => 'nullable|string',
             'description_type' => 'nullable|string',
             'video_link' => 'nullable|string',
+            'iframe_body' => 'nullable|string',
             'video_type' => 'nullable|string',
             'play_as' => 'nullable|string',
             'is_paid' => 'nullable|boolean',

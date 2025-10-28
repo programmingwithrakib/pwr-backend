@@ -55,6 +55,18 @@
         />
     </div>
 
+
+    <div class="col-md-12">
+        <x-input
+            title="Iframe Body"
+            name="iframe_body"
+            type="text-area"
+            value="{{$is_edit ? $course_topic->iframe_body : old('iframe_body')}}"
+            :required="false"
+            rows="10"
+        />
+    </div>
+
     <div class="col-md-12 mb-3 row">
         <label class="col-2 col-form-label">
             Video Type
@@ -71,6 +83,8 @@
         </div>
 
     </div>
+
+
 
     <div class="col-md-12">
         <x-input
@@ -92,6 +106,7 @@
             <select class="form-control" name="play_as">
                 <option @if($is_edit && !$course_topic->play_as == "video") selected @endif value="video">video</option>
                 <option @if($is_edit && !$course_topic->play_as == "image") selected @endif value="image">image</option>
+                <option @if($is_edit && !$course_topic->play_as == "iframe") selected @endif value="iframe">Iframe</option>
                 <option @if($is_edit && !$course_topic->play_as == "none") selected @endif value="none">none</option>
             </select>
         </div>
